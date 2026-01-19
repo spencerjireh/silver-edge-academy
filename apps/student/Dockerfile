@@ -25,6 +25,7 @@ COPY --from=builder /app/apps/student/dist /usr/share/nginx/html
 # Copy nginx config for SPA routing
 COPY apps/student/nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 80
+# Port 80 is used internally - accessed via main nginx reverse proxy in production
+# EXPOSE removed to prevent Coolify from prompting for domain configuration
 
 CMD ["nginx", "-g", "daemon off;"]

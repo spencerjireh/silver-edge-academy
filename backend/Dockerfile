@@ -34,6 +34,7 @@ RUN addgroup -g 1001 -S nodejs && \
 
 USER nodejs
 
-EXPOSE 3000
+# Port 3000 is used internally - accessed via nginx reverse proxy in production
+# EXPOSE removed to prevent Coolify from prompting for domain configuration
 
 CMD ["bun", "run", "start"]
