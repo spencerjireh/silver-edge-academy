@@ -2,9 +2,11 @@ FROM oven/bun:1-alpine AS builder
 
 WORKDIR /app
 
-# Copy workspace config
+# Copy root workspace files and all workspaces (Bun requires all declared workspaces to exist)
 COPY package.json bun.lock* ./
-COPY packages/shared ./packages/shared
+COPY packages ./packages
+COPY apps/admin/package.json ./apps/admin/package.json
+COPY apps/student/package.json ./apps/student/package.json
 COPY backend ./backend
 
 # Install dependencies
