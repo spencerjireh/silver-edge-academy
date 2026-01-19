@@ -54,7 +54,7 @@ export default function AvatarSelection() {
     try {
       await updateAvatarMutation.mutateAsync(selectedAvatar)
       addToast({ type: 'success', message: 'Avatar updated!' })
-      navigate('/profile')
+      navigate('/app/profile')
     } catch {
       addToast({ type: 'error', message: 'Failed to update avatar' })
     }
@@ -65,7 +65,7 @@ export default function AvatarSelection() {
       {/* Header */}
       <div className="flex items-center gap-3">
         <Link
-          to="/profile"
+          to="/app/profile"
           className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
         >
           <ArrowLeft className="w-5 h-5 text-slate-600" />
@@ -123,7 +123,7 @@ export default function AvatarSelection() {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <Button variant="ghost" onClick={() => navigate('/profile')} className="flex-1">
+        <Button variant="ghost" onClick={() => navigate('/app/profile')} className="flex-1">
           Cancel
         </Button>
         <Button

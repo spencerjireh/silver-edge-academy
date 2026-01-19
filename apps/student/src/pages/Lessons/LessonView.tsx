@@ -34,7 +34,7 @@ export default function LessonView() {
     return (
       <div className="text-center py-12">
         <p className="text-red-500">Failed to load lesson</p>
-        <Link to={`/courses/${courseId}`} className="text-violet-600 hover:underline mt-2 inline-block">
+        <Link to={`/app/courses/${courseId}`} className="text-violet-600 hover:underline mt-2 inline-block">
           Back to course
         </Link>
       </div>
@@ -64,7 +64,7 @@ export default function LessonView() {
         triggerXpGain(result.xpEarned, 'lesson')
       }
       addToast({ type: 'success', message: 'Lesson completed!' })
-      navigate(`/courses/${courseId}`)
+      navigate(`/app/courses/${courseId}`)
     } catch {
       addToast({ type: 'error', message: 'Failed to complete lesson' })
     }
@@ -75,7 +75,7 @@ export default function LessonView() {
       {/* Header */}
       <div>
         <Link
-          to={`/courses/${courseId}`}
+          to={`/app/courses/${courseId}`}
           className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors mb-3"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -136,7 +136,7 @@ export default function LessonView() {
             <Code className="w-16 h-16 text-slate-300 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-800 mb-2">Exercise: {currentStep.title}</h3>
             <p className="text-slate-500 mb-6">Complete the coding exercise to continue</p>
-            <Link to={`/courses/${courseId}/lessons/${lessonId}/exercises/${currentStep.id}`}>
+            <Link to={`/app/courses/${courseId}/lessons/${lessonId}/exercises/${currentStep.id}`}>
               <Button>Start Exercise</Button>
             </Link>
           </div>
@@ -147,7 +147,7 @@ export default function LessonView() {
             <FileQuestion className="w-16 h-16 text-slate-300 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-slate-800 mb-2">Quiz: {currentStep.title}</h3>
             <p className="text-slate-500 mb-6">Test your knowledge with a quick quiz</p>
-            <Link to={`/courses/${courseId}/lessons/${lessonId}/quizzes/${currentStep.id}`}>
+            <Link to={`/app/courses/${courseId}/lessons/${lessonId}/quizzes/${currentStep.id}`}>
               <Button>Start Quiz</Button>
             </Link>
           </div>

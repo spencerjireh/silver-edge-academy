@@ -57,7 +57,7 @@ export function LessonNode({ lesson, courseId, showTooltip = true }: LessonNodeP
 
   if (isClickable) {
     return (
-      <Link to={`/courses/${courseId}/lessons/${lesson.id}`}>
+      <Link to={`/app/courses/${courseId}/lessons/${lesson.id}`}>
         {nodeContent}
       </Link>
     )

@@ -116,7 +116,7 @@ export default function SandboxList() {
         <div className="grid gap-4">
           {data.projects.map((project: SandboxProject) => (
             <Card key={project.id} interactive padding="md">
-              <Link to={`/sandbox/${project.id}`} className="block">
+              <Link to={`/app/sandbox/${project.id}`} className="block">
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">

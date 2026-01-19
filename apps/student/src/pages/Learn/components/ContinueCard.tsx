@@ -45,7 +45,7 @@ export function ContinueCard({ course }: ContinueCardProps) {
 
         {/* Continue Button - Desktop */}
         <Link
-          to={`/courses/${course.id}/lessons/${course.currentLessonId}`}
+          to={`/app/courses/${course.id}/lessons/${course.currentLessonId}`}
           className="hidden sm:block"
         >
           <Button className="btn-continue btn-press gap-2">
@@ -71,7 +71,7 @@ export function ContinueCard({ course }: ContinueCardProps) {
 
       {/* Continue Button - Mobile */}
       <Link
-        to={`/courses/${course.id}/lessons/${course.currentLessonId}`}
+        to={`/app/courses/${course.id}/lessons/${course.currentLessonId}`}
         className="sm:hidden block mt-4"
       >
         <Button className="btn-continue btn-press w-full gap-2">

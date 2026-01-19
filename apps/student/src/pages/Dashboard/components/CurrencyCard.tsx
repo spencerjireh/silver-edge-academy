@@ -25,7 +25,7 @@ export function CurrencyCard({ balance }: CurrencyCardProps) {
         </div>
 
         <Link
-          to="/shop"
+          to="/app/shop"
           className="flex items-center justify-between text-sm font-medium text-primary-600 hover:text-primary-700"
         >
           <span>Visit Shop</span>

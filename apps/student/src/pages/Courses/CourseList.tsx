@@ -47,7 +47,7 @@ export default function CourseList() {
 
       <div className="grid gap-4">
         {courses.map((course: CourseListItem) => (
-          <Link key={course.id} to={`/courses/${course.id}`}>
+          <Link key={course.id} to={`/app/courses/${course.id}`}>
             <Card interactive padding="lg">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex-1">

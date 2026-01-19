@@ -61,7 +61,7 @@ export default function SandboxEditor() {
     return (
       <div className="text-center py-12">
         <p className="text-red-500">Failed to load project</p>
-        <Link to="/sandbox" className="text-primary-600 hover:underline mt-2 inline-block">
+        <Link to="/app/sandbox" className="text-primary-600 hover:underline mt-2 inline-block">
           Back to sandbox
         </Link>
       </div>
@@ -112,7 +112,7 @@ export default function SandboxEditor() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Link
-            to="/sandbox"
+            to="/app/sandbox"
             className="p-2 hover:bg-slate-100 rounded-xl transition-colors"
           >
             <ArrowLeft className="w-5 h-5 text-slate-600" />

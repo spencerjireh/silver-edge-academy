@@ -29,7 +29,7 @@ export default function Login() {
     try {
       await login(username.trim(), password)
       addToast({ type: 'success', message: 'Welcome back!' })
-      navigate('/')
+      navigate('/app')
     } catch (error) {
       addToast({
         type: 'error',

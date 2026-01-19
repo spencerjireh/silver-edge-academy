@@ -40,7 +40,7 @@ function withSuspense(Component: React.LazyExoticComponent<React.ComponentType<o
 
 export const router = createBrowserRouter([
   {
-    path: '/login',
+    path: '/app/login',
     element: withSuspense(Login),
   },
   {
@@ -49,35 +49,36 @@ export const router = createBrowserRouter([
     errorElement: <ErrorBoundary />,
     children: [
       {
+        path: '/app',
         element: <StudentLayout />,
         errorElement: <ErrorBoundary />,
         children: [
           // Learn (Home)
-          { path: '/', element: withSuspense(LearnPage) },
+          { index: true, element: withSuspense(LearnPage) },
 
           // Courses
-          { path: '/courses', element: withSuspense(CourseList) },
-          { path: '/courses/:courseId', element: withSuspense(CourseMap) },
-          { path: '/courses/:courseId/lessons/:lessonId', element: withSuspense(LessonView) },
-          { path: '/courses/:courseId/lessons/:lessonId/exercises/:exerciseId', element: withSuspense(ExerciseView) },
-          { path: '/courses/:courseId/lessons/:lessonId/quizzes/:quizId', element: withSuspense(QuizView) },
+          { path: 'courses', element: withSuspense(CourseList) },
+          { path: 'courses/:courseId', element: withSuspense(CourseMap) },
+          { path: 'courses/:courseId/lessons/:lessonId', element: withSuspense(LessonView) },
+          { path: 'courses/:courseId/lessons/:lessonId/exercises/:exerciseId', element: withSuspense(ExerciseView) },
+          { path: 'courses/:courseId/lessons/:lessonId/quizzes/:quizId', element: withSuspense(QuizView) },
 
           // Sandbox (Code)
-          { path: '/sandbox', element: withSuspense(SandboxList) },
-          { path: '/sandbox/:projectId', element: withSuspense(SandboxEditor) },
+          { path: 'sandbox', element: withSuspense(SandboxList) },
+          { path: 'sandbox/:projectId', element: withSuspense(SandboxEditor) },
 
           // Shop (will be moved to Profile tab later, keeping for backwards compat)
-          { path: '/shop', element: withSuspense(ShopPage) },
+          { path: 'shop', element: withSuspense(ShopPage) },
 
           // Profile (Me)
-          { path: '/profile', element: withSuspense(ProfilePage) },
-          { path: '/profile/avatar', element: withSuspense(AvatarSelection) },
+          { path: 'profile', element: withSuspense(ProfilePage) },
+          { path: 'profile/avatar', element: withSuspense(AvatarSelection) },
 
           // Help
-          { path: '/help', element: withSuspense(HelpRequestsPage) },
+          { path: 'help', element: withSuspense(HelpRequestsPage) },
 
           // Notifications
-          { path: '/notifications', element: withSuspense(NotificationsPage) },
+          { path: 'notifications', element: withSuspense(NotificationsPage) },
         ],
       },
     ],
@@ -85,6 +86,6 @@ export const router = createBrowserRouter([
   {
     // Catch-all redirect to home
     path: '*',
-    element: <Navigate to="/" replace />,
+    element: <Navigate to="/app" replace />,
   },
 ])

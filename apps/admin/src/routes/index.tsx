@@ -79,11 +79,7 @@ function StudentCreate() {
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <Navigate to="/admin" replace />,
-  },
-  {
-    path: '/login',
+    path: '/admin/login',
     element: withSuspense(Login),
   },
   {

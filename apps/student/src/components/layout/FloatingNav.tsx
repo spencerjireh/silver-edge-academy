@@ -11,9 +11,9 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { icon: BookOpen, label: 'Learn', path: '/', exactMatch: true },
-  { icon: Code, label: 'Code', path: '/sandbox' },
-  { icon: User, label: 'Me', path: '/profile' },
+  { icon: BookOpen, label: 'Learn', path: '/app', exactMatch: true },
+  { icon: Code, label: 'Code', path: '/app/sandbox' },
+  { icon: User, label: 'Me', path: '/app/profile' },
 ]
 
 interface FloatingNavProps {
@@ -29,7 +29,7 @@ export function FloatingNav({ isHidden }: FloatingNavProps) {
     <nav className={cn('nav-container', isHidden && 'nav-hidden')}>
       {navItems.map((item) => {
         const Icon = item.icon
-        const isMe = item.path === '/profile'
+        const isMe = item.path === '/app/profile'
 
         return (
           <NavLink

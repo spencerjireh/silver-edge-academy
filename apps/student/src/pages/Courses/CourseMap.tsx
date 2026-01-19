@@ -26,7 +26,7 @@ export default function CourseMap() {
     return (
       <div className="text-center py-12">
         <p className="text-red-500">Failed to load course</p>
-        <Link to="/" className="text-violet-600 hover:underline mt-2 inline-block">
+        <Link to="/app" className="text-violet-600 hover:underline mt-2 inline-block">
           Back to Learn
         </Link>
       </div>
@@ -42,7 +42,7 @@ export default function CourseMap() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <Link
-          to="/"
+          to="/app"
           className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />

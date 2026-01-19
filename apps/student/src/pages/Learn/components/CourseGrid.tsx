@@ -33,7 +33,7 @@ export function CourseGrid({ courses }: CourseGridProps) {
           return (
             <Link
               key={course.id}
-              to={`/courses/${course.id}`}
+              to={`/app/courses/${course.id}`}
               className={`course-card ${course.language} block rounded-2xl border p-5 cursor-pointer`}
             >
               {/* Course Icon */}

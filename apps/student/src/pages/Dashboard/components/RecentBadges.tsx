@@ -30,7 +30,7 @@ export function RecentBadges({ badges, nextBadge }: RecentBadgesProps) {
       <div className="flex items-center justify-between mb-4">
         <CardTitle>Recent Badges</CardTitle>
         <Link
-          to="/profile?tab=achievements"
+          to="/app/profile?tab=achievements"
           className="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-1"
         >
           <span>View all</span>

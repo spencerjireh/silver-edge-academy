@@ -55,7 +55,7 @@ export default function ExerciseView() {
       <div className="text-center py-12">
         <p className="text-red-500">Failed to load exercise</p>
         <Link
-          to={`/courses/${courseId}/lessons/${lessonId}`}
+          to={`/app/courses/${courseId}/lessons/${lessonId}`}
           className="text-primary-600 hover:underline mt-2 inline-block"
         >
           Back to lesson
@@ -107,7 +107,7 @@ export default function ExerciseView() {
       {/* Header */}
       <div>
         <Link
-          to={`/courses/${courseId}/lessons/${lessonId}`}
+          to={`/app/courses/${courseId}/lessons/${lessonId}`}
           className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 mb-2"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -195,7 +195,7 @@ export default function ExerciseView() {
             </Button>
 
             {!submitResult?.passed && (
-              <Link to={`/courses/${courseId}/lessons/${lessonId}`}>
+              <Link to={`/app/courses/${courseId}/lessons/${lessonId}`}>
                 <Button variant="ghost">
                   <HelpCircle className="w-4 h-4 mr-1" />
                   Ask for Help
@@ -206,7 +206,7 @@ export default function ExerciseView() {
 
           {submitResult?.passed && (
             <Button
-              onClick={() => navigate(`/courses/${courseId}/lessons/${lessonId}`)}
+              onClick={() => navigate(`/app/courses/${courseId}/lessons/${lessonId}`)}
               className="w-full"
               variant="success"
             >

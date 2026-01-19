@@ -43,7 +43,7 @@ export default function QuizView() {
       <div className="text-center py-12">
         <p className="text-red-500">Failed to load quiz</p>
         <Link
-          to={`/courses/${courseId}/lessons/${lessonId}`}
+          to={`/app/courses/${courseId}/lessons/${lessonId}`}
           className="text-primary-600 hover:underline mt-2 inline-block"
         >
           Back to lesson
@@ -106,7 +106,7 @@ export default function QuizView() {
     return (
       <div className="max-w-md mx-auto animate-fade-in">
         <Link
-          to={`/courses/${courseId}/lessons/${lessonId}`}
+          to={`/app/courses/${courseId}/lessons/${lessonId}`}
           className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 mb-4"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -180,7 +180,7 @@ export default function QuizView() {
 
           <div className="space-y-3">
             <Button
-              onClick={() => navigate(`/courses/${courseId}/lessons/${lessonId}`)}
+              onClick={() => navigate(`/app/courses/${courseId}/lessons/${lessonId}`)}
               className="w-full"
             >
               Continue Learning

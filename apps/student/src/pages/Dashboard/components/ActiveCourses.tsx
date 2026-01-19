@@ -17,7 +17,7 @@ export function ActiveCourses({ courses }: ActiveCoursesProps) {
         <div className="text-center py-8">
           <BookOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
           <p className="text-slate-600 mb-4">No active courses yet</p>
-          <Link to="/courses">
+          <Link to="/app/courses">
             <Button>Browse Courses</Button>
           </Link>
         </div>
@@ -30,7 +30,7 @@ export function ActiveCourses({ courses }: ActiveCoursesProps) {
       <div className="flex items-center justify-between mb-4">
         <CardTitle>Continue Learning</CardTitle>
         <Link
-          to="/courses"
+          to="/app/courses"
           className="text-sm font-medium text-primary-600 hover:text-primary-700 flex items-center gap-1"
         >
           <span>All courses</span>
@@ -42,7 +42,7 @@ export function ActiveCourses({ courses }: ActiveCoursesProps) {
         {courses.map((course) => (
           <Link
             key={course.id}
-            to={`/courses/${course.id}/lessons/${course.currentLessonId}`}
+            to={`/app/courses/${course.id}/lessons/${course.currentLessonId}`}
             className="block"
           >
             <div className="bg-slate-50 hover:bg-slate-100 rounded-xl p-4 transition-colors card-interactive">

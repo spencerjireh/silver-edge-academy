@@ -40,7 +40,7 @@ export function Header({ isNavHidden, toggleNav }: HeaderProps) {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/app" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-violet-700 rounded-lg flex items-center justify-center">
               <Star className="w-5 h-5 text-white fill-white" />
             </div>
@@ -63,7 +63,7 @@ export function Header({ isNavHidden, toggleNav }: HeaderProps) {
           )}
 
           {/* Profile Avatar */}
-          <Link to="/profile" className="flex items-center">
+          <Link to="/app/profile" className="flex items-center">
             <Avatar
               avatarId={user?.avatarId || null}
               displayName={user?.displayName}
