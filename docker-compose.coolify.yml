@@ -14,11 +14,17 @@ services:
     volumes:
       - mongodb_data:/data/db
     restart: always
+    labels:
+      - "coolify.managed=false"
+    # Internal service - no public access needed
 
   minio:
     volumes:
       - minio_data:/data
     restart: always
+    labels:
+      - "coolify.managed=false"
+    # Internal service - no public access needed
 
   backend:
     build:
@@ -27,24 +33,35 @@ services:
     restart: always
     environment:
       NODE_ENV: production
+    labels:
+      - "coolify.managed=false"
+    # Internal service - accessed via nginx reverse proxy
 
   admin-frontend:
     build:
       context: .
       dockerfile: apps/admin/Dockerfile
     restart: always
+    labels:
+      - "coolify.managed=false"
+    # Internal service - served via nginx reverse proxy
 
   student-frontend:
     build:
       context: .
       dockerfile: apps/student/Dockerfile
     restart: always
+    labels:
+      - "coolify.managed=false"
+    # Internal service - served via nginx reverse proxy
 
   nginx:
     volumes:
       - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
     restart: always
-    # Coolify will detect port 80 and route traffic here
+    ports:
+      - "80:80"
+    # This is the ONLY service that should have a domain configured in Coolify
     # Configure domain in Coolify UI for this service
 
 volumes:
