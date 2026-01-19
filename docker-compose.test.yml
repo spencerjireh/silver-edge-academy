@@ -1,0 +1,45 @@
+# Test environment
+# Usage: docker compose -f docker-compose.yml -f docker-compose.test.yml up
+
+name: silveredge-test
+
+services:
+  mongodb:
+    environment:
+      MONGO_INITDB_DATABASE: silveredge_test
+    # Use tmpfs for test data (no persistence)
+    tmpfs:
+      - /data/db
+
+  minio:
+    # Use tmpfs for test data (no persistence)
+    tmpfs:
+      - /data
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.dev
+    volumes:
+      - ./backend:/app/backend:delegated
+      - ./packages:/app/packages:delegated
+      - backend_test_node_modules:/app/node_modules
+    environment:
+      NODE_ENV: test
+      MONGODB_URI: mongodb://silveredge:silveredge_test_password@mongodb:27017/silveredge_test?authSource=admin
+    command: bun run test
+
+  admin-frontend:
+    profiles:
+      - disabled  # No frontend tests yet
+
+  student-frontend:
+    profiles:
+      - disabled  # No frontend tests yet
+
+  nginx:
+    profiles:
+      - disabled  # Nginx not needed for tests
+
+volumes:
+  backend_test_node_modules:

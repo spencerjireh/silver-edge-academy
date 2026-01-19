@@ -1,0 +1,19 @@
+FROM oven/bun:1-alpine
+
+WORKDIR /app
+
+# Copy workspace config from root
+COPY package.json bun.lock* ./
+COPY packages/shared ./packages/shared
+COPY backend ./backend
+
+# Install dependencies
+RUN bun install
+
+WORKDIR /app/backend
+
+# Expose port
+EXPOSE 3000
+
+# Start dev server with hot reload
+CMD ["bun", "run", "dev"]

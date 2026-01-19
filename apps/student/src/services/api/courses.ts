@@ -1,0 +1,100 @@
+import { api } from './client'
+import { STUDENT_ENDPOINTS } from './endpoints'
+import type {
+  StudentCourseMap,
+  LessonContent,
+  StudentExercise,
+  StudentQuiz,
+  ExerciseSubmitResult,
+  QuizSubmitResult,
+} from '@/types/student'
+
+// ============================================================================
+// Types
+// ============================================================================
+
+export interface CourseListItem {
+  id: string
+  title: string
+  language: 'javascript' | 'python'
+  description?: string
+  progressPercent: number
+  totalLessons: number
+  lessonsCompleted: number
+  isAssigned: boolean
+}
+
+// ============================================================================
+// Courses
+// ============================================================================
+
+/**
+ * Get list of enrolled courses with progress
+ */
+export async function getCourses(): Promise<CourseListItem[]> {
+  return api.get<CourseListItem[]>(STUDENT_ENDPOINTS.courses.list)
+}
+
+/**
+ * Get course map with sections and lessons
+ */
+export async function getCourseMap(courseId: string): Promise<StudentCourseMap> {
+  return api.get<StudentCourseMap>(STUDENT_ENDPOINTS.courses.detail(courseId))
+}
+
+// ============================================================================
+// Lessons
+// ============================================================================
+
+/**
+ * Get lesson content
+ */
+export async function getLesson(lessonId: string): Promise<LessonContent> {
+  return api.get<LessonContent>(STUDENT_ENDPOINTS.lessons.detail(lessonId))
+}
+
+/**
+ * Mark lesson as complete
+ */
+export async function completeLesson(lessonId: string): Promise<{ xpEarned: number }> {
+  return api.post<{ xpEarned: number }>(STUDENT_ENDPOINTS.lessons.complete(lessonId))
+}
+
+// ============================================================================
+// Exercises
+// ============================================================================
+
+/**
+ * Get exercise details
+ */
+export async function getExercise(exerciseId: string): Promise<StudentExercise> {
+  return api.get<StudentExercise>(STUDENT_ENDPOINTS.exercises.detail(exerciseId))
+}
+
+/**
+ * Submit exercise code for testing
+ */
+export async function submitExercise(exerciseId: string, code: string): Promise<ExerciseSubmitResult> {
+  return api.post<ExerciseSubmitResult>(STUDENT_ENDPOINTS.exercises.submit(exerciseId), { code })
+}
+
+// ============================================================================
+// Quizzes
+// ============================================================================
+
+/**
+ * Get quiz with questions
+ */
+export async function getQuiz(quizId: string): Promise<StudentQuiz> {
+  return api.get<StudentQuiz>(STUDENT_ENDPOINTS.quizzes.detail(quizId))
+}
+
+/**
+ * Submit quiz answers
+ */
+export async function submitQuiz(
+  quizId: string,
+  answers: { questionId: string; selectedIndex: number }[]
+): Promise<QuizSubmitResult> {
+  return api.post<QuizSubmitResult>(STUDENT_ENDPOINTS.quizzes.submit(quizId), { answers })
+}

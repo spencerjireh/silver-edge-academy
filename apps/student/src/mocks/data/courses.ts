@@ -1,0 +1,132 @@
+import type { StudentCourseMap, ActiveCourse } from '@/types/student'
+
+export const mockCourses: StudentCourseMap[] = [
+  {
+    id: 'course-js-basics',
+    title: 'JavaScript Basics',
+    language: 'javascript',
+    description: 'Learn the fundamentals of JavaScript programming',
+    progressPercent: 70,
+    sections: [
+      {
+        id: 'section-1',
+        title: 'Getting Started',
+        orderIndex: 0,
+        status: 'completed',
+        completedCount: 4,
+        totalCount: 4,
+        lessons: [
+          { id: 'lesson-1', sectionId: 'section-1', title: 'What is JavaScript?', orderIndex: 0, status: 'completed', xpReward: 10 },
+          { id: 'lesson-2', sectionId: 'section-1', title: 'Your First Program', orderIndex: 1, status: 'completed', xpReward: 10 },
+          { id: 'lesson-3', sectionId: 'section-1', title: 'Using the Console', orderIndex: 2, status: 'completed', xpReward: 10 },
+          { id: 'lesson-4', sectionId: 'section-1', title: 'Comments in Code', orderIndex: 3, status: 'completed', xpReward: 10 },
+        ],
+      },
+      {
+        id: 'section-2',
+        title: 'Variables',
+        orderIndex: 1,
+        status: 'completed',
+        completedCount: 5,
+        totalCount: 5,
+        lessons: [
+          { id: 'lesson-5', sectionId: 'section-2', title: 'What are Variables?', orderIndex: 0, status: 'completed', xpReward: 10 },
+          { id: 'lesson-6', sectionId: 'section-2', title: 'Let vs Const', orderIndex: 1, status: 'completed', xpReward: 10 },
+          { id: 'lesson-7', sectionId: 'section-2', title: 'Data Types', orderIndex: 2, status: 'completed', xpReward: 10 },
+          { id: 'lesson-8', sectionId: 'section-2', title: 'Working with Numbers', orderIndex: 3, status: 'completed', xpReward: 10 },
+          { id: 'lesson-9', sectionId: 'section-2', title: 'Working with Strings', orderIndex: 4, status: 'completed', xpReward: 10 },
+        ],
+      },
+      {
+        id: 'section-3',
+        title: 'Loops',
+        orderIndex: 2,
+        status: 'in_progress',
+        completedCount: 2,
+        totalCount: 5,
+        lessons: [
+          { id: 'lesson-10', sectionId: 'section-3', title: 'Introduction to Loops', orderIndex: 0, status: 'completed', xpReward: 10 },
+          { id: 'lesson-11', sectionId: 'section-3', title: 'For Loops', orderIndex: 1, status: 'completed', xpReward: 10 },
+          { id: 'lesson-12', sectionId: 'section-3', title: 'While Loops', orderIndex: 2, status: 'current', xpReward: 10 },
+          { id: 'lesson-13', sectionId: 'section-3', title: 'Loop Control', orderIndex: 3, status: 'available', xpReward: 10 },
+          { id: 'lesson-14', sectionId: 'section-3', title: 'Nested Loops', orderIndex: 4, status: 'available', xpReward: 10 },
+        ],
+      },
+      {
+        id: 'section-4',
+        title: 'Functions',
+        orderIndex: 3,
+        status: 'locked',
+        completedCount: 0,
+        totalCount: 4,
+        lessons: [
+          { id: 'lesson-15', sectionId: 'section-4', title: 'What are Functions?', orderIndex: 0, status: 'locked', xpReward: 15 },
+          { id: 'lesson-16', sectionId: 'section-4', title: 'Parameters and Arguments', orderIndex: 1, status: 'locked', xpReward: 15 },
+          { id: 'lesson-17', sectionId: 'section-4', title: 'Return Values', orderIndex: 2, status: 'locked', xpReward: 15 },
+          { id: 'lesson-18', sectionId: 'section-4', title: 'Scope', orderIndex: 3, status: 'locked', xpReward: 15 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'course-python-adventure',
+    title: 'Python Adventures',
+    language: 'python',
+    description: 'Explore the world of Python programming',
+    progressPercent: 20,
+    sections: [
+      {
+        id: 'py-section-1',
+        title: 'Hello Python',
+        orderIndex: 0,
+        status: 'in_progress',
+        completedCount: 2,
+        totalCount: 5,
+        lessons: [
+          { id: 'py-lesson-1', sectionId: 'py-section-1', title: 'Welcome to Python', orderIndex: 0, status: 'completed', xpReward: 10 },
+          { id: 'py-lesson-2', sectionId: 'py-section-1', title: 'Print Statements', orderIndex: 1, status: 'completed', xpReward: 10 },
+          { id: 'py-lesson-3', sectionId: 'py-section-1', title: 'Variables in Python', orderIndex: 2, status: 'current', xpReward: 10 },
+          { id: 'py-lesson-4', sectionId: 'py-section-1', title: 'User Input', orderIndex: 3, status: 'available', xpReward: 10 },
+          { id: 'py-lesson-5', sectionId: 'py-section-1', title: 'Basic Math', orderIndex: 4, status: 'available', xpReward: 10 },
+        ],
+      },
+      {
+        id: 'py-section-2',
+        title: 'Making Decisions',
+        orderIndex: 1,
+        status: 'locked',
+        completedCount: 0,
+        totalCount: 4,
+        lessons: [
+          { id: 'py-lesson-6', sectionId: 'py-section-2', title: 'If Statements', orderIndex: 0, status: 'locked', xpReward: 15 },
+          { id: 'py-lesson-7', sectionId: 'py-section-2', title: 'Else and Elif', orderIndex: 1, status: 'locked', xpReward: 15 },
+          { id: 'py-lesson-8', sectionId: 'py-section-2', title: 'Comparison Operators', orderIndex: 2, status: 'locked', xpReward: 15 },
+          { id: 'py-lesson-9', sectionId: 'py-section-2', title: 'Logical Operators', orderIndex: 3, status: 'locked', xpReward: 15 },
+        ],
+      },
+    ],
+  },
+]
+
+export const mockActiveCourses: ActiveCourse[] = [
+  {
+    id: 'course-js-basics',
+    title: 'JavaScript Basics',
+    language: 'javascript',
+    currentSection: 'Loops',
+    currentLessonId: 'lesson-12',
+    progressPercent: 70,
+    lessonsCompleted: 11,
+    totalLessons: 18,
+  },
+  {
+    id: 'course-python-adventure',
+    title: 'Python Adventures',
+    language: 'python',
+    currentSection: 'Hello Python',
+    currentLessonId: 'py-lesson-3',
+    progressPercent: 20,
+    lessonsCompleted: 2,
+    totalLessons: 9,
+  },
+]

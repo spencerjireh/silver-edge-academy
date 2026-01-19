@@ -1,0 +1,1232 @@
+@import "tailwindcss";
+
+/* Custom theme configuration for Silver Edge Academy Student Portal v2 */
+@theme {
+  /* Typography - Bricolage Grotesque (display), DM Sans (body), JetBrains Mono (code) */
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Primary colors (Violet - Calm) */
+  --color-violet-50: #F5F3FF;
+  --color-violet-100: #EDE9FE;
+  --color-violet-200: #DDD6FE;
+  --color-violet-300: #C4B5FD;
+  --color-violet-400: #A78BFA;
+  --color-violet-500: #8B5CF6;
+  --color-violet-600: #7C3AED;
+  --color-violet-700: #6D28D9;
+
+  /* Accent colors (Coral - Energy) */
+  --color-coral-400: #FB7185;
+  --color-coral-500: #F43F5E;
+  --color-coral-600: #E11D48;
+
+  /* Semantic colors */
+  --color-success: #34D399;
+  --color-warning: #FBBF24;
+  --color-error: #F87171;
+  --color-info: #38BDF8;
+
+  /* Gamification colors */
+  --color-xp-gold: #FBBF24;
+  --color-coins-yellow: #FACC15;
+  --color-level-violet: #8B5CF6;
+  --color-badge-pink: #F472B6;
+  --color-streak-orange: #FB923C;
+
+  /* Neutral colors (warmer stone tints) */
+  --color-background: #FAFAF9;
+  --color-surface: #FFFFFF;
+  --color-border: #E5E7EB;
+  --color-text-primary: #1E293B;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+
+  /* Crystal Glass Effects */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-light: rgba(255, 255, 255, 0.5);
+  --glass-bg-heavy: rgba(255, 255, 255, 0.85);
+  --glass-blur: 12px;
+  --glass-blur-sm: 8px;
+  --glass-blur-lg: 20px;
+  --glass-violet: rgba(245, 243, 255, 0.75);
+
+  /* Crystal Border Effects */
+  --crystal-border: 1px solid rgba(139, 92, 246, 0.15);
+  --crystal-border-light: 1px solid rgba(255, 255, 255, 0.6);
+
+  /* Faceted Highlight (top-left light reflection) */
+  --crystal-highlight: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%);
+
+  /* 3D Border Depth System (no shadows) */
+  --crystal-depth-sm: 2px;
+  --crystal-depth-md: 3px;
+  --crystal-depth-lg: 4px;
+  --crystal-depth-color: rgba(109, 40, 217, 0.35);
+  --crystal-depth-color-light: rgba(139, 92, 246, 0.25);
+  --crystal-depth-color-dark: rgba(88, 28, 135, 0.4);
+  --depth-color-neutral: rgba(30, 41, 59, 0.15);
+  --depth-color-neutral-dark: rgba(15, 23, 42, 0.2);
+
+  /* Custom timing functions */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Border radius tokens */
+  --radius-sm: 8px;
+  --radius-default: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Custom animations */
+  --animate-bounce-custom: bounce-custom 600ms ease-in-out;
+  --animate-confetti: confetti 1000ms ease-out forwards;
+  --animate-spin-coin: spin-coin 500ms linear;
+  --animate-float-up: float-up 600ms ease-out forwards;
+  --animate-pulse-glow: pulse-glow 2000ms ease-in-out infinite;
+  --animate-shake: shake 400ms ease-in-out;
+  --animate-slide-in-right: slide-in-right 300ms ease-out;
+  --animate-fade-in: fade-in 400ms ease-out forwards;
+  --animate-breathe: breathe 3s ease-in-out infinite;
+  --animate-xp-rise: xp-rise 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  --animate-badge-pop: badge-pop 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  --animate-slide-down: slide-down 300ms ease-out;
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-background);
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display font utility */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Keyframe Definitions */
+@keyframes bounce-custom {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes confetti {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+  100% { transform: scale(0) rotate(360deg); opacity: 0; }
+}
+
+@keyframes spin-coin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@keyframes float-up {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-40px); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); border-width: 2px; }
+  50% { transform: scale(1.02); border-width: 3px; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fire-flicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); }
+  25% { transform: scaleY(1.1) scaleX(0.95); }
+  50% { transform: scaleY(0.9) scaleX(1.05); }
+  75% { transform: scaleY(1.05) scaleX(0.98); }
+}
+
+/* New v2 Animations */
+
+/* Breathing animation for current lesson node */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    border-bottom-width: 3px;
+  }
+  50% {
+    transform: scale(1.02);
+    border-bottom-width: 4px;
+  }
+}
+
+/* XP gain with scale bounce */
+@keyframes xp-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(1);
+  }
+}
+
+/* Badge reveal */
+@keyframes badge-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Subtle pulse for notification badge */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Run button shimmer */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Toast slide down */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Fade out for toast auto-dismiss */
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Crystal shimmer sweep animation */
+@keyframes crystal-shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+/* Crystal pulse for subtle breathing effect */
+@keyframes crystal-pulse {
+  0%, 100% {
+    transform: translateY(0);
+    border-bottom-width: var(--crystal-depth-md);
+  }
+  50% {
+    transform: translateY(-1px);
+    border-bottom-width: var(--crystal-depth-lg);
+  }
+}
+
+/* Animation classes */
+.animate-bounce-custom {
+  animation: bounce-custom 600ms ease-in-out;
+}
+
+.animate-confetti {
+  animation: confetti 1000ms ease-out forwards;
+}
+
+.animate-spin-coin {
+  animation: spin-coin 500ms linear;
+}
+
+.animate-float-up {
+  animation: float-up 600ms ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2000ms ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 400ms ease-in-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 300ms ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 400ms ease-out forwards;
+}
+
+.animate-fire {
+  animation: fire-flicker 400ms ease-in-out infinite;
+}
+
+.animate-breathe {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.animate-xp-rise {
+  animation: xp-rise 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-badge-pop {
+  animation: badge-pop 400ms cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 0.6s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 300ms ease-out;
+}
+
+/* Animation delay utilities */
+.delay-1 { animation-delay: 0.05s; opacity: 0; }
+.delay-2 { animation-delay: 0.1s; opacity: 0; }
+.delay-3 { animation-delay: 0.15s; opacity: 0; }
+.delay-4 { animation-delay: 0.2s; opacity: 0; }
+.delay-5 { animation-delay: 0.25s; opacity: 0; }
+
+/* Skeleton loading animation */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  background: linear-gradient(90deg, var(--color-violet-100) 25%, var(--color-violet-50) 50%, var(--color-violet-100) 75%);
+  background-size: 200% 100%;
+}
+
+/* ========================================
+   Crystal Design System Utilities (Enhanced)
+   ======================================== */
+
+/* Base frosted glass effect with depth */
+.crystal-glass {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--crystal-border);
+  border-bottom-width: var(--crystal-depth-md);
+  border-bottom-color: var(--crystal-depth-color-light);
+}
+
+/* Heavy frosted glass (more opaque) with enhanced depth */
+.crystal-glass-heavy {
+  position: relative;
+  background: var(--glass-bg-heavy);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  border: var(--crystal-border);
+  border-bottom-width: var(--crystal-depth-lg);
+  border-bottom-color: var(--crystal-depth-color);
+}
+
+/* Faceted container with beveled highlight and depth */
+.crystal-faceted {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--crystal-border);
+  border-bottom-width: var(--crystal-depth-lg);
+  border-bottom-color: var(--crystal-depth-color);
+}
+
+/* Top-left facet highlight */
+.crystal-faceted::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Bottom edge shadow for 3D bevel */
+.crystal-faceted::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  border-radius: inherit;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.04) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Enhanced gem-like button effect with multi-faceted shine */
+.crystal-gem {
+  position: relative;
+  overflow: hidden;
+  border-bottom-width: var(--crystal-depth-md);
+  border-bottom-style: solid;
+  border-bottom-color: var(--crystal-depth-color);
+}
+
+/* Top-left highlight facet */
+.crystal-gem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 40%;
+  bottom: 40%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Bottom edge shadow for 3D effect */
+.crystal-gem::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 30%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0%, transparent 100%);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* Interactive hover refraction effect */
+.crystal-refract {
+  transition: all 200ms ease;
+}
+
+.crystal-refract:hover {
+  background: var(--glass-bg-light);
+  border-color: rgba(139, 92, 246, 0.25);
+  transform: translateY(-3px);
+  border-bottom-width: var(--crystal-depth-lg);
+  border-bottom-color: var(--crystal-depth-color-dark);
+}
+
+.crystal-refract:hover::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, transparent 35%);
+}
+
+/* Shimmer effect overlay - add to elements that need animated shimmer */
+.crystal-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.crystal-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.crystal-shimmer:hover::after {
+  animation: crystal-shimmer 0.8s ease-out;
+}
+
+/* ========================================
+   Navigation Styles (Left Sidebar Faceted Gems)
+   ======================================== */
+
+/* Navigation container - stickied to left edge of centered main content */
+.nav-container {
+  position: fixed;
+  /* Content left edge = pl-36 (144px) + centered margin within remaining space */
+  /* = 144 + (100vw - 144 - 1024) / 2 = 50vw - 440 */
+  /* Nav left = content left - gap - nav width = 50vw - 440 - 8 - 140 = 50vw - 588 */
+  left: calc(50vw - 588px);
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 40;
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Fallback for screens where calc would push nav off-screen */
+@media (max-width: 1160px) and (min-width: 1025px) {
+  .nav-container {
+    left: 12px;
+  }
+}
+
+/* Hidden state for complete visibility toggle */
+.nav-container.nav-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-100%);
+}
+
+/* Faceted gem navigation button - HORIZONTAL layout */
+.nav-gem {
+  width: 140px;
+  height: 56px;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 18px;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Multi-layer glass background */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.75) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  /* Crystal border with thick bottom for 3D depth */
+  border: 1px solid rgba(139, 92, 246, 0.18);
+  border-bottom-width: var(--crystal-depth-lg);
+  border-bottom-color: var(--crystal-depth-color);
+
+  /* Text styling */
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+/* Top-left facet highlight */
+.nav-gem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.2) 40%,
+    transparent 70%
+  );
+  border-radius: 14px 0 0 14px;
+  pointer-events: none;
+}
+
+/* Top-right secondary facet */
+.nav-gem::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30%;
+  height: 50%;
+  background: linear-gradient(
+    -135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 60%
+  );
+  border-radius: 0 14px 0 0;
+  pointer-events: none;
+}
+
+/* Inner shimmer layer */
+.nav-gem .gem-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 60%,
+    transparent 100%
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Bottom edge for 3D depth */
+.nav-gem .gem-edge {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 6px;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.05) 0%,
+    transparent 100%
+  );
+  border-radius: 0 0 10px 10px;
+  pointer-events: none;
+}
+
+/* Hover state */
+.nav-gem:hover {
+  transform: translateX(4px);
+  border-color: rgba(139, 92, 246, 0.28);
+  border-bottom-width: 5px;
+  border-bottom-color: var(--crystal-depth-color-dark);
+}
+
+.nav-gem:hover .gem-shimmer {
+  animation: crystal-shimmer 0.7s ease-out;
+}
+
+.nav-gem:hover::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.3) 35%,
+    transparent 65%
+  );
+}
+
+/* Active state */
+.nav-gem.active {
+  background: linear-gradient(
+    180deg,
+    rgba(237, 233, 254, 0.95) 0%,
+    rgba(221, 214, 254, 0.9) 100%
+  );
+  border-color: rgba(139, 92, 246, 0.35);
+  color: #7C3AED;
+  border-bottom-width: var(--crystal-depth-lg);
+  border-bottom-color: rgba(109, 40, 217, 0.5);
+}
+
+.nav-gem.active::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(139, 92, 246, 0.1) 40%,
+    transparent 70%
+  );
+}
+
+/* Nav toggle button in header */
+.nav-toggle-header {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  border: var(--crystal-border);
+  border-bottom-width: var(--crystal-depth-sm);
+  border-bottom-color: var(--crystal-depth-color-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 200ms ease;
+  color: var(--color-text-muted);
+}
+
+.nav-toggle-header:hover {
+  background: var(--glass-violet);
+  color: var(--color-violet-600);
+  border-color: rgba(139, 92, 246, 0.25);
+  transform: scale(1.05);
+  border-bottom-width: var(--crystal-depth-md);
+}
+
+/* Notification badge on nav gem - positioned for horizontal layout */
+.nav-gem .notification-badge {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  border: 2px solid white;
+  animation: pulse-subtle 2s infinite;
+  z-index: 20;
+}
+
+/* Mobile navigation (bottom, horizontal) */
+@media (max-width: 767px) {
+  .nav-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    right: auto;
+    top: auto;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 8px;
+    padding: 8px;
+    background: var(--glass-bg-heavy);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    border: var(--crystal-border);
+    border-bottom-width: var(--crystal-depth-lg);
+    border-bottom-color: var(--crystal-depth-color);
+  }
+
+  .nav-container.nav-hidden {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+  }
+
+  .nav-gem {
+    width: auto;
+    min-width: 70px;
+    height: 50px;
+    padding: 0 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .nav-gem .notification-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    transform: none;
+  }
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .nav-container {
+    left: 4px;
+    top: 76px;
+  }
+
+  .nav-gem {
+    width: 130px;
+    height: 52px;
+    font-size: 15px;
+    padding: 0 16px;
+  }
+}
+
+/* ========================================
+   Card Styles
+   ======================================== */
+
+/* Card hover effects */
+.card-interactive {
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-3px);
+  background: var(--glass-bg-light);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+/* ========================================
+   Course Card Themes (Language-specific)
+   ======================================== */
+
+.course-card {
+  transition: transform 200ms ease, border-color 200ms ease, filter 200ms ease, border-bottom-width 200ms ease;
+  backdrop-filter: blur(var(--glass-blur-sm));
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  border-bottom-width: var(--crystal-depth-md);
+  border-bottom-style: solid;
+}
+
+.course-card:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.02);
+  border-bottom-width: var(--crystal-depth-lg);
+}
+
+.course-card.javascript {
+  --card-accent: rgba(251, 191, 36, 0.3);
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border-color: rgba(251, 191, 36, 0.2);
+  border-bottom-color: rgba(180, 83, 9, 0.35);
+}
+
+.course-card.javascript:hover {
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.course-card.python {
+  --card-accent: rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border-color: rgba(59, 130, 246, 0.2);
+  border-bottom-color: rgba(37, 99, 235, 0.35);
+}
+
+.course-card.python:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.course-card.scratch {
+  --card-accent: rgba(249, 115, 22, 0.3);
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  border-color: rgba(249, 115, 22, 0.2);
+  border-bottom-color: rgba(194, 65, 12, 0.35);
+}
+
+.course-card.scratch:hover {
+  border-color: rgba(249, 115, 22, 0.4);
+}
+
+.course-card.web,
+.course-card.html {
+  --card-accent: rgba(16, 185, 129, 0.3);
+  background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+  border-color: rgba(16, 185, 129, 0.2);
+  border-bottom-color: rgba(5, 150, 105, 0.35);
+}
+
+.course-card.web:hover,
+.course-card.html:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* ========================================
+   Lesson Node Styles (Course Path)
+   ======================================== */
+
+.lesson-node {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  transition: all 200ms ease;
+  border-bottom: var(--crystal-depth-md) solid var(--depth-color-neutral);
+  cursor: pointer;
+}
+
+.lesson-node.completed {
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  color: white;
+  border-bottom-color: rgba(88, 28, 135, 0.6);
+}
+
+.lesson-node.current {
+  background: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
+  color: white;
+  border-bottom-color: rgba(136, 19, 55, 0.6);
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.lesson-node.available {
+  background: white;
+  border: 2px solid #8B5CF6;
+  color: #8B5CF6;
+  border-bottom-width: 4px;
+  border-bottom-color: rgba(109, 40, 217, 0.4);
+}
+
+.lesson-node.available:hover {
+  background: #F5F3FF;
+  transform: scale(1.05);
+}
+
+.lesson-node.locked {
+  background: #F1F5F9;
+  color: #94A3B8;
+  border: 1px solid #E2E8F0;
+  cursor: not-allowed;
+}
+
+/* Path connector lines */
+.path-connector {
+  stroke: var(--color-violet-200);
+  stroke-width: 3;
+  fill: none;
+}
+
+.path-connector.completed {
+  stroke: var(--color-violet-400);
+}
+
+/* ========================================
+   Lesson Content Typography
+   ======================================== */
+
+.lesson-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding-left: 48px;
+  padding-right: 32px;
+}
+
+.lesson-content h1 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
+}
+
+.lesson-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+}
+
+.lesson-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+}
+
+.lesson-content p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.lesson-content code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--color-violet-50);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  color: var(--color-violet-700);
+}
+
+.lesson-content pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  background: #1a1a2e;
+  color: #E5E7EB;
+  padding: 1rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.lesson-content pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+/* Reading progress indicator */
+.reading-progress {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-violet-100);
+  z-index: 20;
+}
+
+.reading-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-violet-400), var(--color-violet-500));
+  transition: width 100ms ease-out;
+}
+
+/* ========================================
+   Button Styles
+   ======================================== */
+
+/* Button press feedback */
+.btn-press:active {
+  transform: scale(0.97);
+  transition: transform 100ms ease-out;
+}
+
+/* Run button with shimmer */
+.btn-run {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+}
+
+.btn-run::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+}
+
+.btn-run:active::after {
+  animation: shimmer 0.6s ease-out;
+}
+
+/* Continue button (coral accent) */
+.btn-continue {
+  background: linear-gradient(135deg, var(--color-coral-500) 0%, var(--color-coral-600) 100%);
+  color: white;
+}
+
+.btn-continue:hover {
+  background: linear-gradient(135deg, var(--color-coral-400) 0%, var(--color-coral-500) 100%);
+}
+
+/* ========================================
+   Editor Styles
+   ======================================== */
+
+.editor-toolbar {
+  background: linear-gradient(180deg, #FAFAFA 0%, #F5F3FF 100%);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.output-panel {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16162a 100%);
+  border-top: 2px solid var(--color-violet-500);
+  color: #E5E7EB;
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.output-line::before {
+  content: '>';
+  color: #34D399;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.output-success {
+  color: #34D399;
+}
+
+.output-error {
+  color: #F87171;
+}
+
+.output-warning {
+  color: #FBBF24;
+}
+
+/* Editor success indicator */
+.editor-success-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(52, 211, 153, 0.1);
+  border-left: 3px solid #34D399;
+  color: #059669;
+  font-size: 14px;
+  animation: fade-in 200ms ease;
+}
+
+/* ========================================
+   Toast Styles (Level Up, Badge Earned)
+   ======================================== */
+
+.level-up-toast {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 24px;
+  background: var(--glass-bg-heavy);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  border: var(--crystal-border);
+  border-radius: 16px;
+  animation: slide-down 300ms ease-out;
+  z-index: 100;
+}
+
+.level-up-toast.fade-out {
+  animation: fade-out 300ms ease-in forwards;
+}
+
+.level-badge-large {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* XP float animation */
+.xp-float {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-xp-gold);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  animation: xp-rise 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ========================================
+   Continue Card (Learn Page)
+   ======================================== */
+
+.continue-card {
+  background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%);
+  border: 1px solid #DDD6FE;
+  border-bottom-width: var(--crystal-depth-lg);
+  border-bottom-color: rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  padding: 20px 24px;
+}
+
+/* ========================================
+   Utility Classes
+   ======================================== */
+
+/* Bottom nav safe area for iOS */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Progress bar animation */
+.progress-bar-animated {
+  transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Touch-friendly tap highlight */
+@media (hover: none) {
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: rgba(139, 92, 246, 0.1);
+  }
+}
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-violet-500);
+  outline-offset: 2px;
+}
+
+/* Custom scrollbar for desktop */
+@media (hover: hover) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #F1F5F9;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-violet-300);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-violet-400);
+  }
+}
+
+/* Input focus glow */
+.input-focus-glow:focus {
+  border-color: var(--color-violet-400);
+  border-bottom-width: var(--crystal-depth-md);
+  border-bottom-color: var(--crystal-depth-color);
+}
+
+/* Toggle switch animation */
+.toggle-thumb {
+  transition: transform 200ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toggle.active .toggle-thumb {
+  transform: translateX(20px);
+}

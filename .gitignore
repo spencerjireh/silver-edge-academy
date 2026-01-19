@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build outputs
+dist/
+*/dist/
+build/
+*/build/
+
+# Environment files (keep examples)
+.env
+.env.local
+.env.prod
+!.env.example
+!.env.prod.example
+!.env.dev
+!.env.test
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Testing
+coverage/
+
+# Bun
+bun.lockb
+
+# Docker volumes data (if mounted locally)
+postgres_data/
+
+# Turborepo
+.turbo/
+
+# Playwright MCP
+.playwright-mcp/
+.claude/

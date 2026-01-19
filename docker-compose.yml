@@ -1,0 +1,67 @@
+# Base Docker Compose configuration
+# Use with: docker compose -f docker-compose.yml -f docker-compose.<env>.yml up
+
+services:
+  mongodb:
+    image: mongo:7-jammy
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-silveredge}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-silveredge_password}
+      MONGO_INITDB_DATABASE: ${MONGO_DB:-silveredge_db}
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')", "-u", "${MONGO_USER:-silveredge}", "-p", "${MONGO_PASSWORD:-silveredge_password}", "--authenticationDatabase", "admin", "--quiet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      MONGODB_URI: mongodb://${MONGO_USER:-silveredge}:${MONGO_PASSWORD:-silveredge_password}@mongodb:27017/${MONGO_DB:-silveredge_db}?authSource=admin
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      S3_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      S3_BUCKET: ${S3_BUCKET:-silveredge}
+      PORT: 3000
+
+  admin-frontend:
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8080/api}
+
+  student-frontend:
+    depends_on:
+      - backend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8080/api}
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - admin-frontend
+      - student-frontend
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+

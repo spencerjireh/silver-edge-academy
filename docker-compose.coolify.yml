@@ -1,0 +1,52 @@
+# Coolify deployment configuration
+# Usage: Set compose files to "docker-compose.yml;docker-compose.coolify.yml" in Coolify
+#
+# Coolify Setup:
+# 1. Coolify automatically creates a network for all services in this stack
+# 2. Configure domain in Coolify UI - it handles Traefik labels and TLS automatically
+# 3. Set the domain to point to the nginx service (port 80)
+# 4. Configure environment variables in Coolify UI
+
+name: silveredge-coolify
+
+services:
+  mongodb:
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+
+  minio:
+    volumes:
+      - minio_data:/data
+    restart: always
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: always
+    environment:
+      NODE_ENV: production
+
+  admin-frontend:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+    restart: always
+
+  student-frontend:
+    build:
+      context: .
+      dockerfile: apps/student/Dockerfile
+    restart: always
+
+  nginx:
+    volumes:
+      - ./nginx/nginx.prod.conf:/etc/nginx/nginx.conf:ro
+    restart: always
+    # Coolify will detect port 80 and route traffic here
+    # Configure domain in Coolify UI for this service
+
+volumes:
+  mongodb_data:
+  minio_data:
