@@ -21,7 +21,7 @@ export function StudentLayout() {
 
       {/* Main content */}
       <main className={cn(
-        'pb-24 md:pb-6 transition-all duration-300',
+        'pt-16 pb-24 md:pb-6 transition-all duration-300',
         !isNavHidden && 'md:pl-36'
       )}>
         <div className="max-w-5xl mx-auto px-4 py-4 md:py-6">

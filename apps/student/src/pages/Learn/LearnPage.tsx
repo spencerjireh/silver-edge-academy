@@ -42,21 +42,9 @@ export default function LearnPage() {
         <ContinueCard course={mostRecentCourse} />
       )}
 
-      {/* Course Grid - show all courses except the first one in continue card */}
-      {activeCourses.length > 1 && (
-        <CourseGrid courses={activeCourses.slice(1)} />
-      )}
-
-      {/* If only one course, still show it in the grid section */}
-      {activeCourses.length === 1 && (
-        <div className="mb-8">
-          <h2 className="font-display font-semibold text-slate-800 text-lg mb-4">
-            Your Courses
-          </h2>
-          <p className="text-slate-500">
-            Continue learning in your course above.
-          </p>
-        </div>
+      {/* Course Grid - show all active courses */}
+      {activeCourses.length > 0 && (
+        <CourseGrid courses={activeCourses} />
       )}
 
       {/* Recent Activity */}

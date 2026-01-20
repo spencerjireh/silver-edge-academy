@@ -1015,19 +1015,7 @@ export async function getStudentBadges(userId: string): Promise<StudentBadgeResp
 // Shop Service
 // ============================================================================
 
-export interface StudentShopItem {
-  id: string
-  name: string
-  description: string
-  category: string
-  price: number
-  imageUrl?: string
-  isActive: boolean
-  isOwned: boolean
-  isEquipped: boolean
-}
-
-export async function getStudentShopItems(userId: string): Promise<StudentShopItem[]> {
+export async function getStudentShopItems(userId: string) {
   const items = await ShopItem.find({ isActive: true })
   const purchases = await Purchase.find({ studentId: new Types.ObjectId(userId) })
   const purchasedItemIds = new Set(purchases.map((p) => p.itemId.toString()))
@@ -1041,14 +1029,21 @@ export async function getStudentShopItems(userId: string): Promise<StudentShopIt
     description: item.description,
     category: item.category,
     price: item.price,
-    imageUrl: item.imageUrl,
+    previewData: item.previewData,
+    assetUrl: item.assetUrl,
+    isPermanent: item.isPermanent,
     isActive: item.isActive,
+    purchaseCount: item.purchaseCount,
+    createdBy: item.createdBy.toString(),
+    classId: item.classId?.toString(),
+    createdAt: item.createdAt.toISOString(),
+    updatedAt: item.updatedAt.toISOString(),
     isOwned: purchasedItemIds.has(item._id.toString()),
     isEquipped: Object.values(equippedItems).includes(item._id.toString()),
   }))
 }
 
-export async function getStudentInventory(userId: string): Promise<StudentShopItem[]> {
+export async function getStudentInventory(userId: string) {
   const purchases = await Purchase.find({ studentId: new Types.ObjectId(userId) })
   const itemIds = purchases.map((p) => p.itemId)
   const items = await ShopItem.find({ _id: { $in: itemIds } })
@@ -1062,8 +1057,15 @@ export async function getStudentInventory(userId: string): Promise<StudentShopIt
     description: item.description,
     category: item.category,
     price: item.price,
-    imageUrl: item.imageUrl,
+    previewData: item.previewData,
+    assetUrl: item.assetUrl,
+    isPermanent: item.isPermanent,
     isActive: item.isActive,
+    purchaseCount: item.purchaseCount,
+    createdBy: item.createdBy.toString(),
+    classId: item.classId?.toString(),
+    createdAt: item.createdAt.toISOString(),
+    updatedAt: item.updatedAt.toISOString(),
     isOwned: true,
     isEquipped: Object.values(equippedItems).includes(item._id.toString()),
   }))

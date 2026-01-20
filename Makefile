@@ -11,10 +11,10 @@ install: ## Install all dependencies
 # ==================== Development ====================
 
 dev: ## Start development environment with hot reload
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev up --build
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev up
 
 dev-detached: ## Start development environment in background
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev up --build -d
+	docker compose -f docker-compose.yml -f docker-compose.dev.yml --env-file .env.dev up -d
 
 dev-down: ## Stop development environment
 	docker compose -f docker-compose.yml -f docker-compose.dev.yml down
