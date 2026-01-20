@@ -35,7 +35,16 @@ async function seed() {
         process.exit(0)
       }
     } else {
-      logger.warn('Force override enabled - seeding without database check')
+      logger.warn('Force override enabled - dropping existing collections')
+
+      // Drop all collections
+      const collections = await mongoose.connection.db?.collections()
+      if (collections) {
+        for (const collection of collections) {
+          await collection.drop()
+          logger.info(`Dropped collection: ${collection.collectionName}`)
+        }
+      }
     }
 
     logger.info('Starting seed process...')
