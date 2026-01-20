@@ -6,8 +6,12 @@ import type { SandboxProject } from '@/types/student'
 // Types
 // ============================================================================
 
-// Backend returns array directly (unwrapped by API client)
-export type SandboxListResponse = SandboxProject[]
+export interface SandboxListResponse {
+  projects: SandboxProject[]
+  count: number
+  maxProjects: number
+}
+
 export type SandboxProjectResponse = SandboxProject
 
 export interface CreateSandboxProjectInput {
@@ -35,7 +39,15 @@ export async function getSandboxProjects(params?: {
   limit?: number
   language?: 'javascript' | 'python'
 }): Promise<SandboxListResponse> {
-  return api.get<SandboxListResponse>(STUDENT_ENDPOINTS.sandbox.list, { params })
+  const response = await api.get<{ data: SandboxProject[]; meta: { total: number; page: number; limit: number; totalPages: number; maxProjects: number } }>(
+    STUDENT_ENDPOINTS.sandbox.list,
+    { params, unwrapData: false }
+  )
+  return {
+    projects: response.data,
+    count: response.meta.total,
+    maxProjects: response.meta.maxProjects,
+  }
 }
 
 /**

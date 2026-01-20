@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Check, Lock } from 'lucide-react'
 import { cn } from '@/utils/cn'
@@ -12,13 +13,32 @@ interface LessonNodeProps {
   }
   courseId: string
   showTooltip?: boolean
+  disableLink?: boolean
 }
 
-export function LessonNode({ lesson, courseId, showTooltip = true }: LessonNodeProps) {
+export function LessonNode({ lesson, courseId, showTooltip = true, disableLink = false }: LessonNodeProps) {
   const isClickable = lesson.status !== 'locked'
+  const nodeRef = useRef<HTMLDivElement>(null)
+  const [isHovered, setIsHovered] = useState(false)
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    if (isHovered && nodeRef.current) {
+      const rect = nodeRef.current.getBoundingClientRect()
+      setTooltipPos({
+        x: rect.left + rect.width / 2,
+        y: rect.top - 8, // 8px above the node
+      })
+    }
+  }, [isHovered])
 
   const nodeContent = (
-    <div className="relative group">
+    <div
+      ref={nodeRef}
+      className="relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* The node circle */}
       <div
         className={cn(
@@ -37,10 +57,30 @@ export function LessonNode({ lesson, courseId, showTooltip = true }: LessonNodeP
           <span className="text-sm font-bold">{lesson.orderIndex + 1}</span>
         )}
       </div>
+    </div>
+  )
 
-      {/* Tooltip on hover */}
-      {showTooltip && (
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
+  const content = isClickable && !disableLink ? (
+    <Link to={`/app/courses/${courseId}/lessons/${lesson.id}`}>
+      {nodeContent}
+    </Link>
+  ) : (
+    nodeContent
+  )
+
+  return (
+    <>
+      {content}
+      {/* Fixed position tooltip that escapes overflow containers */}
+      {showTooltip && isHovered && (
+        <div
+          className="fixed pointer-events-none z-50 transition-opacity duration-200"
+          style={{
+            left: `${tooltipPos.x}px`,
+            top: `${tooltipPos.y}px`,
+            transform: 'translate(-50%, -100%)',
+          }}
+        >
           <div className="bg-slate-800 text-white text-xs px-3 py-2 rounded-lg whitespace-nowrap max-w-48 truncate">
             {lesson.title}
             {lesson.xpReward && lesson.status !== 'completed' && (
@@ -52,16 +92,6 @@ export function LessonNode({ lesson, courseId, showTooltip = true }: LessonNodeP
           </div>
         </div>
       )}
-    </div>
+    </>
   )
-
-  if (isClickable) {
-    return (
-      <Link to={`/app/courses/${courseId}/lessons/${lesson.id}`}>
-        {nodeContent}
-      </Link>
-    )
-  }
-
-  return nodeContent
 }

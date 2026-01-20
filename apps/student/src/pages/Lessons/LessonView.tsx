@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, BookOpen, Code, FileQuestion, CheckCircle } from 'lucide-react'
-import { useLesson, useCompleteLesson } from '@/hooks/queries/useCourses'
+import ReactMarkdown from 'react-markdown'
+import { ArrowLeft, ArrowRight, BookOpen, Code, FileQuestion, CheckCircle, ChevronDown } from 'lucide-react'
+import { useLesson, useCompleteLesson, useCourseMap } from '@/hooks/queries/useCourses'
 import { useGamification } from '@/contexts/GamificationContext'
 import { useToast } from '@/contexts/ToastContext'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Skeleton } from '@/components/ui/Skeleton'
+import { Breadcrumb } from '@/components/navigation/Breadcrumb'
+import { CourseOutlinePopover } from '@/components/course/CourseOutlinePopover'
+import { computeLessonNavigation } from '@/utils/lessonNavigation'
 import { cn } from '@/utils/cn'
 import type { LessonStep } from '@/types/student'
 
@@ -15,13 +19,19 @@ export default function LessonView() {
   const { courseId, lessonId } = useParams<{ courseId: string; lessonId: string }>()
   const navigate = useNavigate()
   const { data: lesson, isLoading, error } = useLesson(lessonId)
+  const { data: courseMap, isLoading: courseMapLoading } = useCourseMap(courseId)
   const completeLessonMutation = useCompleteLesson()
   const { triggerXpGain } = useGamification()
   const { addToast } = useToast()
 
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const [isOutlineOpen, setIsOutlineOpen] = useState(false)
+  const outlineButtonRef = useRef<HTMLButtonElement>(null)
 
-  if (isLoading) {
+  // Compute navigation context from course map
+  const navContext = courseMap && lessonId ? computeLessonNavigation(courseMap, lessonId) : null
+
+  if (isLoading || courseMapLoading) {
     return (
       <div className="space-y-4">
         <Skeleton className="h-8 w-64" />
@@ -70,22 +80,71 @@ export default function LessonView() {
     }
   }
 
+  // Build breadcrumb items
+  const breadcrumbItems = navContext
+    ? [
+        { label: navContext.courseTitle, href: `/app/courses/${courseId}` },
+        { label: navContext.currentSection.title },
+        { label: lesson.title },
+      ]
+    : [
+        { label: 'Course', href: `/app/courses/${courseId}` },
+        { label: lesson.sectionTitle },
+        { label: lesson.title },
+      ]
+
   return (
-    <div className="max-w-[680px] mx-auto space-y-6 animate-fade-in">
-      {/* Header */}
+    <div className="space-y-6 animate-fade-in">
+      {/* Header with Breadcrumb and Outline Toggle */}
       <div>
-        <Link
-          to={`/app/courses/${courseId}`}
-          className="inline-flex items-center gap-1 text-slate-500 hover:text-slate-700 transition-colors mb-3"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to course</span>
-        </Link>
+        <div className="flex items-center justify-between gap-4 mb-3">
+          <Breadcrumb items={breadcrumbItems} />
+          {courseMap && (
+            <div className="relative">
+              <button
+                ref={outlineButtonRef}
+                onClick={() => setIsOutlineOpen(!isOutlineOpen)}
+                className={cn(
+                  'flex items-center gap-2 px-3 py-2 rounded-xl transition-colors',
+                  isOutlineOpen
+                    ? 'bg-violet-100 text-violet-700'
+                    : 'bg-slate-100 hover:bg-violet-100 text-slate-600 hover:text-violet-700'
+                )}
+                aria-label="Toggle course outline"
+                aria-expanded={isOutlineOpen}
+              >
+                <span className="text-sm font-medium">Outline</span>
+                <ChevronDown
+                  className={cn(
+                    'w-4 h-4 transition-transform',
+                    isOutlineOpen && 'rotate-180'
+                  )}
+                />
+              </button>
+              {courseMap && lessonId && (
+                <CourseOutlinePopover
+                  isOpen={isOutlineOpen}
+                  onClose={() => setIsOutlineOpen(false)}
+                  courseMap={courseMap}
+                  currentLessonId={lessonId}
+                  currentSectionId={lesson.sectionId}
+                  anchorRef={outlineButtonRef}
+                />
+              )}
+            </div>
+          )}
+        </div>
 
         <div className="flex items-center justify-between">
           <div>
             <Badge variant="default" className="mb-2">{lesson.sectionTitle}</Badge>
             <h1 className="font-display text-2xl font-bold text-slate-800">{lesson.title}</h1>
+            {/* Position indicator */}
+            {navContext && (
+              <p className="text-sm text-slate-500 mt-1">
+                Lesson {navContext.currentSection.lessonIndex + 1} of {navContext.currentSection.totalLessons} in {navContext.currentSection.title}
+              </p>
+            )}
           </div>
           <Badge variant="warning" className="text-lg px-3 py-1">
             +{lesson.xpReward} XP
@@ -127,7 +186,49 @@ export default function LessonView() {
       <Card padding="lg">
         {currentStep.type === 'content' && (
           <div className="prose prose-slate max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: formatMarkdown(lesson.content) }} />
+            <ReactMarkdown
+              components={{
+                h1: ({ children }) => (
+                  <h1 className="font-display text-2xl font-bold mt-6 mb-4 text-slate-800">{children}</h1>
+                ),
+                h2: ({ children }) => (
+                  <h2 className="font-display text-xl font-bold mt-6 mb-3 text-slate-800">{children}</h2>
+                ),
+                h3: ({ children }) => (
+                  <h3 className="font-display text-lg font-bold mt-6 mb-2 text-slate-800">{children}</h3>
+                ),
+                p: ({ children }) => (
+                  <p className="my-3 text-slate-600 leading-relaxed">{children}</p>
+                ),
+                strong: ({ children }) => (
+                  <strong className="font-semibold">{children}</strong>
+                ),
+                code: ({ children, className }) => {
+                  const isCodeBlock = className?.includes('language-')
+                  if (isCodeBlock) {
+                    return <code className="font-mono text-sm">{children}</code>
+                  }
+                  return (
+                    <code className="bg-violet-50 px-1.5 py-0.5 rounded text-sm font-mono text-violet-600">
+                      {children}
+                    </code>
+                  )
+                },
+                pre: ({ children }) => (
+                  <pre className="bg-slate-900 text-slate-100 p-4 rounded-2xl overflow-x-auto my-4 border-2 border-violet-500/20">
+                    {children}
+                  </pre>
+                ),
+                ul: ({ children }) => (
+                  <ul className="my-3 space-y-1">{children}</ul>
+                ),
+                li: ({ children }) => (
+                  <li className="ml-4 text-slate-600">{children}</li>
+                ),
+              }}
+            >
+              {lesson.content}
+            </ReactMarkdown>
           </div>
         )}
 
@@ -154,7 +255,7 @@ export default function LessonView() {
         )}
       </Card>
 
-      {/* Navigation */}
+      {/* Step Navigation */}
       <div className="flex items-center justify-between">
         <Button
           variant="ghost"
@@ -179,18 +280,4 @@ export default function LessonView() {
       </div>
     </div>
   )
-}
-
-// Simple markdown formatter for lesson content
-function formatMarkdown(content: string): string {
-  return content
-    .replace(/^### (.*$)/gm, '<h3 class="font-display text-lg font-bold mt-6 mb-2 text-slate-800">$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2 class="font-display text-xl font-bold mt-6 mb-3 text-slate-800">$1</h2>')
-    .replace(/^# (.*$)/gm, '<h1 class="font-display text-2xl font-bold mt-6 mb-4 text-slate-800">$1</h1>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold">$1</strong>')
-    .replace(/`([^`]+)`/g, '<code class="bg-violet-50 px-1.5 py-0.5 rounded text-sm font-mono text-violet-600">$1</code>')
-    .replace(/```(\w+)?\n([\s\S]*?)```/g, '<pre class="bg-slate-900 text-slate-100 p-4 rounded-2xl overflow-x-auto my-4 border-2 border-violet-500/20"><code class="font-mono text-sm">$2</code></pre>')
-    .replace(/^- (.*$)/gm, '<li class="ml-4 text-slate-600">$1</li>')
-    .replace(/\n\n/g, '</p><p class="my-3 text-slate-600 leading-relaxed">')
-    .replace(/^(?!<)(.+)$/gm, '<p class="my-3 text-slate-600 leading-relaxed">$1</p>')
 }

@@ -901,17 +901,6 @@ body {
   cursor: not-allowed;
 }
 
-/* Path connector lines */
-.path-connector {
-  stroke: var(--color-violet-200);
-  stroke-width: 3;
-  fill: none;
-}
-
-.path-connector.completed {
-  stroke: var(--color-violet-400);
-}
-
 /* ========================================
    Lesson Content Typography
    ======================================== */

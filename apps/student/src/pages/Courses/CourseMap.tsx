@@ -4,7 +4,7 @@ import { useCourseMap } from '@/hooks/queries/useCourses'
 import { Badge } from '@/components/ui/Badge'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 import { Skeleton } from '@/components/ui/Skeleton'
-import { WindingPath } from '@/components/course/WindingPath'
+import { LessonList } from '@/components/course/LessonList'
 import { cn } from '@/utils/cn'
 import type { StudentSection } from '@/types/student'
 
@@ -119,8 +119,8 @@ export default function CourseMap() {
               )}
             </div>
 
-            {/* Winding path for lessons */}
-            <WindingPath
+            {/* Lesson list */}
+            <LessonList
               lessons={section.lessons}
               courseId={course.id}
               className="mt-4"

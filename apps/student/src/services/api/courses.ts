@@ -5,7 +5,6 @@ import type {
   LessonContent,
   StudentExercise,
   StudentQuiz,
-  QuizQuestion,
   ExerciseSubmitResult,
   QuizSubmitResult,
 } from '@/types/student'

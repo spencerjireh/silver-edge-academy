@@ -5,10 +5,16 @@ services:
   mongodb:
     image: mongo:7-jammy
     restart: unless-stopped
+    command: ["mongod", "--quiet"]
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER:-silveredge}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-silveredge_password}
       MONGO_INITDB_DATABASE: ${MONGO_DB:-silveredge_db}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')", "-u", "${MONGO_USER:-silveredge}", "-p", "${MONGO_PASSWORD:-silveredge_password}", "--authenticationDatabase", "admin", "--quiet"]
       interval: 10s
